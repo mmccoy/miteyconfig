@@ -1,2 +1,2 @@
 # miteyconfig
-Configuration and Dotfiles
+Various configuration and dotfiles
