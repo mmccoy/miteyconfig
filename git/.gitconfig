@@ -107,6 +107,7 @@
     sl = stash list
     sa = stash apply
     ss = stash save
+    sso = credential-corpsso login
     # }}}
     # assume aliases {{{
     assume = update-index --assume-unchanged
