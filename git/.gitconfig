@@ -1,16 +1,10 @@
-# core {{{
 [core]
     editor = vim 
     pager=less -x4
 
-#}}}
-# user {{{
-[user]
-    email = mmccoy@gmail.com
-    name = Michael McCoy
+[include]
+    path = ~/.git_id
 
-#}}}
-# color {{{
 [color]
     branch = auto
     diff = auto
@@ -33,8 +27,6 @@
     changed = green
     untracked = cyan
 
-# }}}
-# push/pull/diff/options {{{
 [push]
     default = current
 [pull]
@@ -46,8 +38,6 @@
 [apply]
     whitespace = nowarn
 
-#}}}
-# alias {{{
 [alias]
     # basic {{{
     s = status
@@ -58,74 +48,47 @@
     r = reset
     cp = cherry-pick
     gr = grep -Ii
-    # }}}
-    # tweak defaults {{{
     diff = diff --word-diff
     branch = branch -ra
     grep = grep -Ii
     bra = branch -ra
     ai = add --interactive
-    # grep on filename
     f = "!git ls-files | grep -i"
-    # }}}
-    # commit {{{
     cm = commit -m
     cma = commit -a -m
     ca = commit --amend
     amend = commit --amend
     caa = commit -a --amend -C HEAD
-    # }}}
-    # log commands {{{
     ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
     lc  = "!f() { git ll "$1"^.."$1"; }; f"
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
     fl = log -u
     filelog = log -u
-    # }}}
-    # diff {{{
     d = diff --word-diff
     dc = diff --cached
-    # diff last commit
     dlc = diff --cached HEAD^
     dr  = "!f() { git diff -w "$1"^.."$1"; }; f"
     diffr  = "!f() { git diff "$1"^.."$1"; }; f"
-    # }}}
-    # reset commands {{{
     r1 = reset HEAD^
     r2 = reset HEAD^^
     rh = reset --hard
     rh1 = reset HEAD^ --hard
     rh2 = reset HEAD^^ --hard
-    # }}}
-    # git svn {{{
     svnr = svn rebase
     svnd = svn dcommit
     svnl = svn log --oneline --show-commit
-    # }}}
-    # stash {{{
     sl = stash list
     sa = stash apply
     ss = stash save
     sso = credential-corpsso login
-    # }}}
-    # assume aliases {{{
     assume = update-index --assume-unchanged
     unassume = update-index --no-assume-unchanged
-    # show assumed files
     assumed = "!git ls-files -v | grep ^h | cut -c 3-"
-    # unassume all the assumed files
     unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
     assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
-    # }}}
-    # subtree {{{
-    #   add
     sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f" 
-    #   update/pull
     sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f" 
-    # }}}
-    # various useful {{{
-    # last tag created
     lasttag = describe --tags --abbrev=0
     lt = describe --tags --abbrev=0
 
@@ -147,19 +110,11 @@
 
     # list all aliases
     la = "!git config -l | grep alias | cut -c 7-"
-    # }}}
-    # convoluted aliases {{{
-    # grep from root folder
     gra = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
-    #rename branch tree to done-
     done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
-    #add bitbucket remote
     ra = "!f() { git remote add $1 https://bitbucket.org/$2.git; }; f"
-    # }}}
-    # worktree list {{{
     wl = worktree list
-    # }}}
-# }}}
+
 [rerere]
   enabled = false
 [rebase]
